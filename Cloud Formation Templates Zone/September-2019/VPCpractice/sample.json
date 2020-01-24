@@ -1,0 +1,113 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "creating vpc with 3 subnets",
+    "Resources": {
+        "venkysvpc2": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "192.168.0.0/16",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "vpc3"
+                    }
+                ]
+            }
+        },
+        "firstsubnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "venkysvpc2"
+                },
+                "CidrBlock": "192.168.0.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "firstsub"
+                    }
+                ]
+            }
+        },
+        "firstsubnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1b",
+                "VpcId": {
+                    "Ref": "venkysvpc2"
+                },
+                "CidrBlock": "192.168.1.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "secondsub"
+                    }
+                ]
+            }
+        },
+        "firstsubnet3": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1c",
+                "VpcId": {
+                    "Ref": "venkysvpc2"
+                },
+                "CidrBlock": "192.168.2.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "thirdsub"
+                    }
+                ]
+            }
+        },
+        "venkysigw": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "venkigw"
+                    }
+                ]
+            }
+        },
+        "AttachGateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "venkysvpc2"
+                },
+                "InternetGatewayId": {
+                    "Ref": "venkysigw"
+                }
+            }
+        },
+        "venkyrt24": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "venkysvpc2"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "routevpc"
+                    }
+                ]
+            }
+        },
+
+        
+        "routeName": {
+          "Type": "AWS::EC2::Route",
+          "Properties": {
+            "RouteTableId": "--",
+            "DestinationCidrBlock": "0.0.0.0/0",
+            "GatewayId": "venkysigw"
+          }
+        }
+        
+    }
+}

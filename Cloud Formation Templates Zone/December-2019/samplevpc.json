@@ -1,0 +1,41 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "AWS VPC Desigining by Venky Chowdary Bommagani",
+    "Resources": {
+        "venkyownvpc1": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "192.168.0.0/16",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkyvpc"
+                    }
+                ]
+            }
+       }
+    },
+    "venkyigw1": {
+        "Type": "AWS::EC2::InternetGateway",
+        "Properties": {
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "venkyigw1"
+                }
+            ]
+        }
+    },
+    "attachgateway": {
+        "Type": "AWS::EC2::VPCGatewayAttachment",
+        "Properties": {
+            "VpcId": {
+                "Ref": "venkyownvpc1"
+            },
+            "InternetGatewayId": {
+                "Ref": "venkyigw1"
+            }
+        }
+    }
+}
+

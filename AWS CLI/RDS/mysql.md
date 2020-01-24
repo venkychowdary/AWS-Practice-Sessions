@@ -1,0 +1,5 @@
+# To create mysql database from cli
+---
+    aws rds create-db-instance --engine mysql --port 3306 --allocated-storage 20 --db-instance-class db.t2.micro --enable-cloudwatch-logs-exports '["audit","error","general","slowquery"]' --master-username venky --master-user-password venky123 --multi-az true --db-instance-identifier venkysdb --engine-version 8.0.16 --auto-minor-version-upgrade true --publicly-accessible true --monitoring-interval 5 --no-deletion-protection
+
+    aws rds create-db-instance --db-name mysql --db-instance-identifier venky --allocated-storage 20 --db-instance-class db.t2.micro --engine mysql --master-username venky --master-user-password venky123 --port 3306 --no-multi-az --engine-version 8.0.16 --yes-auto-minor-version-upgrade --license-model public --yes-publicly-accessible --no-deletion-protection

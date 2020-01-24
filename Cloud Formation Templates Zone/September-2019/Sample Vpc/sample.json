@@ -1,0 +1,147 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "creating sample vpc with 3 subnets in mumbai regeion",
+    "Resources": {
+        "venkyvpc": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "192.168.0.0/16",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Firstvpc"
+                    }
+                ]
+            }
+        },
+        "subnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "venkyvpc"
+                },
+                "CidrBlock": "192.168.0.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Sub1"
+                    }
+                ]
+            }
+        },
+        "subnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1b",
+                "VpcId": {
+                    "Ref": "venkyvpc"
+                },
+                "CidrBlock": "192.168.1.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Sub2"
+                    }
+                ]
+            }
+        },
+        "subnet3": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1c",
+                "VpcId": {
+                    "Ref": "venkyvpc"
+                },
+                "CidrBlock": "192.168.2.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Sub3"
+                    }
+                ]
+            }
+        },
+        "vpcigw": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Vpcgateway"
+                    }
+                ]
+            }
+        },
+        "attachgateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "venkyvpc"
+                },
+                "InternetGatewayId": {
+                    "Ref": "vpcigw"
+                }
+            }
+        },
+        "vpcroute": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "venkyvpc"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Vpcrt"
+                    }
+                ]
+            }
+        },
+        "myroute": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "vpcroute"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "vpcigw"
+                }
+            }
+        },
+        "routetableassociationsub1": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "subnet1"
+                },
+                "RouteTableId": {
+                    "Ref": "vpcroute"
+                }
+            }
+        },
+        "routetableassociationsub2": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "subnet2"
+                },
+                "RouteTableId": {
+                    "Ref": "vpcroute"
+                }
+            }
+        },
+        "routetableassociationsub3": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "subnet3"
+                },
+                "RouteTableId": {
+                    "Ref": "vpcroute"
+                }
+            }
+        }
+    }
+}

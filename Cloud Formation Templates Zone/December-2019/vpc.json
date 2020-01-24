@@ -1,0 +1,246 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "AWS VPC Desigining by Venky Chowdary Bommagani",
+    "Resources": {
+        "venkyownvpc": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "192.168.0.0/16",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkyvpc"
+                    }
+                ]
+            }
+        },
+        "venkysubnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1a",
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "CidrBlock": "192.168.0.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkysub1"
+                    }
+                ]
+            }
+        },
+        "venkysubnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1b",
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "CidrBlock": "192.168.1.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkysub2"
+                    }
+                ]
+            }
+        },
+        "venkysubnet3": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1c",
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "CidrBlock": "192.168.2.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkysub3"
+                    }
+                ]
+            }
+        },
+        "venkysubnet4": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1d",
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "CidrBlock": "192.168.3.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkysub3"
+                    }
+                ]
+            }
+        },
+        "venkysubnet5": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1e",
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "CidrBlock": "192.168.4.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkysub5"
+                    }
+                ]
+            }
+        },
+        "venkysubnet6": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1f",
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "CidrBlock": "192.168.5.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Venkysub6"
+                    }
+                ]
+            }
+        },
+        "venkyigw1": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "venkyigw-1"
+                    }
+                ]
+            }
+        },
+        "attachgateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "InternetGatewayId": {
+                    "Ref": "venkyigw1"
+                }
+            }
+        },
+        "venkyrttable1": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "venkyrt-1"
+                    }
+                ]
+            }
+        },
+        "venkyrttable2": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "venkyownvpc"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "venkyrt-2"
+                    }
+                ]
+            }
+        },
+        "venkyroute1": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": "venkyrttable1",
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "venkyigw1"
+            }
+        },
+        "venkyroute2": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": "venkyrttable2",
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "venkyigw1"
+            }
+        },
+        "venkyrttableassc1": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "venkysubnet1"
+                },
+                "RouteTableId": {
+                    "Ref": "venkyrttable1"
+                }
+            }
+        },
+        "venkyrttableassc2": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "venkysubnet2"
+                },
+                "RouteTableId": {
+                    "Ref": "venkyrttable1"
+                }
+            }
+        },
+        "venkyrttableassc3": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "venkysubnet3"
+                },
+                "RouteTableId": {
+                    "Ref": "venkyrttable1"
+                }
+            }
+        },
+        "venkyrttableassc4": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "venkysubnet4"
+                },
+                "RouteTableId": {
+                    "Ref": "venkyrttable2"
+                }
+            }
+        },
+        "venkyrttableassc5": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "venkysubnet5"
+                },
+                "RouteTableId": {
+                    "Ref": "venkyrttable2"
+                }
+            }
+        },
+        "venkyrttableassc6": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "venkysubnet6"
+                },
+                "RouteTableId": {
+                    "Ref": "venkyrttable2"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This is my first cf template",
+    "Resources": {
+        "myvpc": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "192.168.0.0/16",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "From CF"
+                    }
+                ]
+            }
+        },
+        "mysubnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-west-2a",
+                "CidrBlock": "192.168.0.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "From CF"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "myvpc"
+                }
+            }
+        },
+        "mysubnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-west-2b",
+                "CidrBlock": "192.168.1.0/24",
+                "Tags": [
+                    {
+                        "K key": "Name",
+                        "Value": "From CF"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "myvpc"
+                }
+            }
+        },
+        "mysubnet3": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-west-2c",
+                "CidrBlock": "192.168.2.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "From CF"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "myvpc"
+                }
+            }
+        }
+    }
+}

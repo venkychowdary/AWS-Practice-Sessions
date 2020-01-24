@@ -1,0 +1,19 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Creating s3 bucket",
+    "Resources": {
+        "s3bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "PublicReadWrite",
+                "BucketName": "clouds3",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Simples3"
+                    }
+                ]
+            }
+        }
+    }
+}

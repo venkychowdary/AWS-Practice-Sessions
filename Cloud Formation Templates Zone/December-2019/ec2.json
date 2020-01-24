@@ -1,0 +1,17 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Venky Chowdary Bommagani creating infrastructure for Venky Software solutions",
+    "venkyownvpc": {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+            "CidrBlock": "10.0.0.0/16",
+            "EnableDnsHostnames": "True",
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "Venkyvpc"
+                }
+            ]
+        }
+    }
+}
